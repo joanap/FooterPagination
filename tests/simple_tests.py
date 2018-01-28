@@ -22,6 +22,30 @@ class SimpleTests(unittest.TestCase):
         """
         self.assertSequenceEqual((4, 4), footer_pagination.init_around_pages(4, 0, 5))
 
+    def test_are_overlapping_pages(self):
+        """
+        Test overlapping sets of pages
+        """
+        self.assertTrue(footer_pagination.are_overlapping_pages((1, 3), (2, 4)))
+
+    def test_not_overlapping_pages(self):
+        """
+        Test not overlapping sets of pages
+        """
+        self.assertFalse(footer_pagination.are_overlapping_pages((1, 3), (6, 7)))
+
+    def test_unify_pages(self):
+        """
+        Tests merging of two overlapping sets of pages
+        """
+        self.assertSequenceEqual((1, 4), footer_pagination.unify_pages((1, 3), (2, 4)))
+
+    def test_update_pages(self):
+        """
+        Tests the update of two sets of pages that overlap
+        """
+        self.assertSequenceEqual(((1, 4), None), footer_pagination.update_pages((1, 3), (2, 4)))
+
 
 def main():
     unittest.main()
